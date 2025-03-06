@@ -1,6 +1,6 @@
 # Week 5
 
-### Task 1: Generic Stack
+## Task 1: Generic Stack
 
 Implement a generic stack in C++ that can store elements of any data type. Use templates to achieve generality and constructors for initialization. Extend the functionality through inheritance to customize the stack for specific data types.
 
@@ -15,7 +15,7 @@ Implement a generic stack in C++ that can store elements of any data type. Use t
 - Override the `push()` method in `StringStack` to include a check that rejects empty strings (i.e., the method should not allow pushing empty strings onto the stack).
 - Add a new method `concatTopTwo()` in `StringStack` that pops the top two strings, concatenates them, and then pushes the result back onto the stack. If there are not enough elements in the stack, throw an exception.
 
-#### Instructions:
+### Instructions
 
 - Start by planning your implementation and sketching out the class structure.
 - Implement the `GenericStack` class template, focusing on correctly handling generic data types with templates.
@@ -43,10 +43,9 @@ Understand and apply smart pointers in C++ (`unique_ptr`, `shared_ptr`, `weak_pt
    - Extend the `Box` class usage by introducing a `weak_ptr<Box>`. Demonstrate how to check if a `weak_ptr` points to an object (i.e., if the object is still alive) and how to convert a `weak_ptr` to a `shared_ptr` to access the object.
    - Explain the use case of `weak_ptr` to solve the problem of circular references.
 
-#### Instructions:
+### Instructions
 
 - Implement each part of the task sequentially, testing your understanding of how each smart pointer type works and their respective use cases.
 - Pay attention to the mechanics of ownership transfer, especially how `unique_ptr` cannot be copied but can be moved.
 - For `shared_ptr`, observe how the reference count mechanism prevents premature deallocation and how it automatically cleans up when no more `shared_ptr` instances point to the object.
 - Use `weak_ptr` to access resources without taking ownership and demonstrate how it helps in managing circular references by breaking dependency cycles.
-

@@ -33,7 +33,6 @@
 1. **Abstraction Discussion**
    - Discuss how the base class and intermediate classes provide an abstraction layer.
 
-**Expected Output**
+### Expected Output
 
 The program should instantiate various animal types, demonstrating polymorphism with `makeSound()` and the specific behaviors of land and water animals.
-

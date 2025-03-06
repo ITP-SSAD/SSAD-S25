@@ -27,4 +27,3 @@ Write a program that accepts a number of elements (N) of the array of integers a
 | Input                 | Output    |
 | --------------------- | --------- |
 | 8<br/>1 3 5 3 3 4 1 2 | 1 3 5 4 2 |
-
