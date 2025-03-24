@@ -9,4 +9,6 @@ Lab tasks and solutions for "Software System Analysis and Design - Spring 2025"
 - Week 5: Templates and Smart Pointers
 - Week 6: Templates (cont.) and Lambda Expressions
 - Week 7: C++ STL and Iteratorss
+- Week 8: Midterm
+- Week 9: Singleton, State, and Prototype design patterns.
 
