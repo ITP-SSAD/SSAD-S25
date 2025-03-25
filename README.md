@@ -11,4 +11,7 @@ Lab tasks and solutions for "Software System Analysis and Design - Spring 2025"
 - Week 7: C++ STL and Iteratorss
 - Week 8: Midterm
 - Week 9: Singleton, State, and Prototype design patterns.
+- Week 10: Strategy, Adapter, and Composite design patterns
+
+
 
