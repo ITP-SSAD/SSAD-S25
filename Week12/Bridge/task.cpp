@@ -12,7 +12,7 @@ public:
 };
 
 // Jazz Music Players
-class JazzMusicPlayerMP3Codec : public MusicPlayer {
+class JazzMP3Codec : public MusicPlayer {
 public:
     void start(const string& fileName) override {
         cout << "Started Jazz Player..." << endl;
@@ -24,7 +24,7 @@ public:
     }
 };
 
-class JazzMusicPlayerWAVCodec : public MusicPlayer {
+class JazzWAVCodec : public MusicPlayer {
 public:
     void start(const string& fileName) override {
         cout << "Started Jazz Player..." << endl;
@@ -37,7 +37,7 @@ public:
 };
 
 // Pop Music Players
-class PopMusicPlayerMP3Codec : public MusicPlayer {
+class PopMP3Codec : public MusicPlayer {
 public:
     void start(const string& fileName) override {
         cout << "Started Pop Player..." << endl;
@@ -49,7 +49,7 @@ public:
     }
 };
 
-class PopMusicPlayerWAVCodec : public MusicPlayer {
+class PopWAVCodec : public MusicPlayer {
 public:
     void start(const string& fileName) override {
         cout << "Started Pop Player..." << endl;
@@ -63,9 +63,9 @@ public:
 
 int main() {
     // Using pointers for polymorphism
-    MusicPlayer* popMusicPlayer1 = new PopMusicPlayerMP3Codec();
-    MusicPlayer* jazzMusicPlayer = new JazzMusicPlayerMP3Codec();
-    MusicPlayer* popMusicPlayer2 = new PopMusicPlayerWAVCodec();
+    MusicPlayer* popMusicPlayer1 = new PopMP3Codec();
+    MusicPlayer* jazzMusicPlayer = new JazzMP3Codec();
+    MusicPlayer* popMusicPlayer2 = new PopWAVCodec();
 
     popMusicPlayer1->start("pop_song_1.mp3");
     jazzMusicPlayer->start("jazz_song.mp3");

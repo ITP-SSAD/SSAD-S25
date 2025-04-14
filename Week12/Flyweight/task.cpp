@@ -24,7 +24,6 @@ public:
 // Client code - creates formatted text
 int main() {
     vector<FormattedCharacter> document;
-
     // Add characters to our document
     document.emplace_back('H', "Arial", 12, "Red");
     document.emplace_back('e', "Arial", 12, "Red");
@@ -32,7 +31,7 @@ int main() {
     document.emplace_back('l', "Arial", 12, "Red");
     document.emplace_back('o', "Arial", 12, "Red");
     
-    document.emplace_back(' ', "Times New Roman", 12, "Black");
+    document.emplace_back('_', "Times New Roman", 12, "Black");
     
     document.emplace_back('W', "Arial", 14, "Blue");
     document.emplace_back('o', "Arial", 14, "Blue");
@@ -41,7 +40,7 @@ int main() {
     document.emplace_back('d', "Arial", 14, "Blue");
     
     document.emplace_back('!', "Arial", 16, "Green");
-
+    
     // Print all characters
     cout << "Document content:\n";
     for (const auto& fc : document) {
