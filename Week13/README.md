@@ -3,10 +3,10 @@
 ## Task 1 - Interpreter
 
 1. You are to build an interpreter for mathematical expressions.
-   1. Classes to build: the numerical expression, multiplication expression, addition expression, subtraction expression. 
-   1. Imagine the parser is built for you. 
+   1. Classes to build: the numerical expression, multiplication expression, addition expression, subtraction expression.
+   1. Imagine the parser is built for you.
    1. Use the interpreter design pattern to evaluate a given expression.
-   1. Demonstrate the usage in the main function. 
+   1. Demonstrate the usage in the main function.
 
 ## Task 2 - Iterator
 
