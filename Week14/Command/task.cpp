@@ -3,6 +3,8 @@
 #include <vector>
 #include <memory>
 
+using namespace std;
+
 // TODO: Create a Command interface with execute() and undo() methods
 class Command {
 public:
@@ -12,27 +14,27 @@ public:
 
 class TextEditor {
 private:
-    std::string text;
-    std::string clipboard;
+    string text;
+    string clipboard;
 
 public:
-    void addText(const std::string& newText) {
+    void addText(const string& newText) {
         text += newText;
     }
 
-    void replaceText(const std::string& newText) {
+    void replaceText(const string& newText) {
         text = newText;
     }
 
-    std::string getText() const {
+    string getText() const {
         return text;
     }
 
-    void setClipboard(const std::string& text) {
+    void setClipboard(const string& text) {
         clipboard = text;
     }
 
-    std::string getClipboard() const {
+    string getClipboard() const {
         return clipboard;
     }
 };
@@ -41,7 +43,7 @@ public:
 class CopyCommand : public Command {
 private:
     TextEditor* editor;
-    std::string backup;
+    string backup;
 
 public:
     CopyCommand(TextEditor* editor) : editor(editor) {}
@@ -58,7 +60,7 @@ public:
 class PasteCommand : public Command {
 private:
     TextEditor* editor;
-    std::string backup;
+    string backup;
 
 public:
     PasteCommand(TextEditor* editor) : editor(editor) {}
@@ -73,7 +75,7 @@ public:
 
 class CommandHistory {
 private:
-    std::vector<std::unique_ptr<Command>> history;
+    vector<unique_ptr<Command>> history;
 
 public:
     void push(Command* cmd) {
@@ -96,9 +98,9 @@ int main() {
     TextEditor editor;
     CommandHistory history;
 
-    std::cout << "Enter text: ";
-    std::string input;
-    std::getline(std::cin, input);
+    cout << "Enter text: ";
+    string input;
+    getline(cin, input);
     editor.addText(input);
 
     // Assume user wants to copy and then paste
@@ -110,14 +112,14 @@ int main() {
     history.push(copy);
     history.push(paste);
 
-    std::cout << "Current text: " << editor.getText() << std::endl;
+    cout << "Current text: " << editor.getText() << endl;
 
     // Undo last command
     if (!history.isEmpty()) {
         Command* cmd = history.pop();
         cmd->undo();
         delete cmd;
-        std::cout << "Text after undo: " << editor.getText() << std::endl;
+        cout << "Text after undo: " << editor.getText() << endl;
     }
 
     // Cleanup remaining commands

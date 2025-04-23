@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 
+using namespace std;
+
 // TODO: Create Handler interface with setNext() and handle() methods
 class Handler {
 public:
@@ -35,12 +37,12 @@ public:
     // - Prints appropriate messages
 };
 
-void processRequest(const std::string& request, Handler* handler) {
-    std::cout << "Processing: " << request << std::endl;
+void processRequest(const string& request, Handler* handler) {
+    cout << "Processing: " << request << endl;
     if (!handler->handle(request)) {
-        std::cout << "Request denied.\n" << std::endl;
+        cout << "Request denied.\n" << endl;
     } else {
-        std::cout << "Request approved.\n" << std::endl;
+        cout << "Request approved.\n" << endl;
     }
 }
 
