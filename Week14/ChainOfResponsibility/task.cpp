@@ -1,61 +1,61 @@
 #include <iostream>
 #include <string>
-#include <memory>
-#include <map>
-#include <chrono>
-#include <thread>
 
-using namespace std;
-
-// Handler interface
+// TODO: Create Handler interface with setNext() and handle() methods
 class Handler {
 public:
-    virtual ~Handler() = default;
-    virtual void setNext(shared_ptr<Handler> next) = 0;
-    virtual bool handle(const string& request) = 0;
+    virtual ~Handler() {}
+    // TODO: Add pure virtual methods for setNext() and handle()
 };
 
-// create abstract base handler
+// TODO: Implement AbstractHandler base class that implements Handler
+class AbstractHandler : public Handler {
+private:
+    // TODO: Add next handler pointer
+public:
+    // TODO: Implement setNext() method
+    // TODO: Implement handle() method (base implementation that passes to next)
+};
 
-// create concrete handlers: 
-// AuthenticationHandler, RoleCheckHandler, ThrottlingHandler (optional)
-// handle(request: string) – request contains one of the following:
-// valid/invalid/admin
+// TODO: Implement AuthenticationHandler that inherits from AbstractHandler
+class AuthenticationHandler : public AbstractHandler {
+public:
+    // TODO: Implement handle() method that:
+    // - Returns false if request is not "valid"
+    // - Calls handleNext() if request is "valid"
+    // - Prints appropriate messages
+};
 
+// TODO: Implement RoleCheckHandler that inherits from AbstractHandler
+class RoleCheckHandler : public AbstractHandler {
+public:
+    // TODO: Implement handle() method that:
+    // - Returns true if request is "admin"
+    // - Calls handleNext() for other valid requests
+    // - Prints appropriate messages
+};
 
-// Client code
-void processRequest(const string& request, shared_ptr<Handler> handler) {
-    cout << "\nProcessing: " << request << endl;
+void processRequest(const std::string& request, Handler* handler) {
+    std::cout << "Processing: " << request << std::endl;
     if (!handler->handle(request)) {
-        cout << "Request denied.\n";
+        std::cout << "Request denied.\n" << std::endl;
     } else {
-        cout << "Request approved.\n";
+        std::cout << "Request approved.\n" << std::endl;
     }
 }
 
 int main() {
-    // Build the chain
-    auto auth = make_shared<AuthenticationHandler>();
-    auto roleCheck = make_shared<RoleCheckHandler>();
+    Handler* roleCheck = new RoleCheckHandler();
+    Handler* auth = new AuthenticationHandler();
 
-    // Test with static requests
-    // processRequest("valid", <handler object>);
-    // processRequest("admin", <handler object>);
-    // processRequest("invalid", <handler object>);
+    auth->setNext(roleCheck); // Set the chain: auth -> roleCheck
 
-    // Interactive testing
-    string input;
-    while (true) {
-        cout << "\nEnter request type (valid/invalid/admin/quit): ";
-        getline(cin, input);
+    processRequest("valid", auth);
+    processRequest("invalid", auth);
+    processRequest("admin", auth);
 
-        if (input == "quit") break;
-
-        processRequest(input, <handler object>);
-        
-        // Small delay to demonstrate throttling window
-        this_thread::sleep_for(chrono::seconds(1));
-    }
+    delete auth;
+    delete roleCheck;
 
     return 0;
 }
