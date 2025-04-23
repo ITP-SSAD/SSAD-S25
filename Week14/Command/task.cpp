@@ -2,124 +2,128 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include <stack>
 
-using namespace std;
-
-// Forward declarations
-class Application;
-
-// 1. Complete the Editor class (Receiver)
-class Editor {
-private:
-    string text;
-    string selectedText;
-
-public:
-    // TODO: Implement these methods
-    void setText(const string& newText) {
-        // Set the editor's text content
-    }
-
-    string getText() const {
-        // Return the full text content
-        return "";
-    }
-
-    void selectText(size_t start, size_t length) {
-        // Select a portion of text (store in selectedText)
-    }
-
-    string getSelection() const {
-        // Return the currently selected text
-        return "";
-    }
-
-    void deleteSelection() {
-        // Delete the selected text from the main text
-    }
-
-    void replaceSelection(const string& replacement) {
-        // Replace selected text with new content
-    }
-};
-
-// 2. Base Command class (already implemented)
+// TODO: Create a Command interface with execute() and undo() methods
 class Command {
-protected:
-    Application* app;
-    Editor* editor;
-    string backup;
-
 public:
-    Command(Application* app, Editor* editor) : app(app), editor(editor) {}
-    virtual ~Command() = default;
-    
-    void saveBackup() {
-        backup = editor->getSelection();
-    }
-    
-    void undo() {
-        editor->replaceSelection(backup);
-    }
-    
-    virtual bool execute() = 0;
+    virtual ~Command() {}
+    // TODO: Add pure virtual methods for execute() and undo()
 };
 
-// 3. TODO: Implement these concrete commands and add CutCommand, PasteCommand classes
-class CopyCommand : public Command {
-public:
-    using Command::Command;
-    
-    bool execute() override {
-        // Should copy selected text to clipboard
-        // Return false because it doesn't modify editor state
-        return false;
-    }
-};
-
-
-// 4. Command History (TODO: Implement using stack)
-class CommandHistory {
-
-};
-
-// 5. Application class (Invoker) - TODO: Complete implementation
-class Application {
+class TextEditor {
 private:
-    string clipboard;
-    vector<Editor> editors;
-    Editor* activeEditor;
-    CommandHistory history;
+    std::string text;
+    std::string clipboard;
 
 public:
-    Application() {
-        // Initialize with one editor and some sample text
-        editors.emplace_back();
-        activeEditor = &editors.back();
-        activeEditor->setText("Sample text for testing commands");
-        activeEditor->selectText(0, 6); // Select "Sample"
+    void addText(const std::string& newText) {
+        text += newText;
     }
 
-    void executeCommand(unique_ptr<Command> command) {
-        // Execute command and add to history if it modifies state
+    void replaceText(const std::string& newText) {
+        text = newText;
     }
 
-
-    void undo() {
-        // Undo the most recent command
+    std::string getText() const {
+        return text;
     }
 
-    // TODO: Implement command triggers: copy(), cut(), paste(), performUndo()
+    void setClipboard(const std::string& text) {
+        clipboard = text;
+    }
 
+    std::string getClipboard() const {
+        return clipboard;
+    }
 };
 
+// TODO: Implement CopyCommand that inherits from Command
+class CopyCommand : public Command {
+private:
+    TextEditor* editor;
+    std::string backup;
+
+public:
+    CopyCommand(TextEditor* editor) : editor(editor) {}
+
+    // TODO: Implement execute() method that:
+    // 1. Saves backup of current text
+    // 2. Copies text to clipboard
+    // 3. Returns true
+
+    // TODO: Implement undo() method that restores text from backup
+};
+
+// TODO: Implement PasteCommand that inherits from Command
+class PasteCommand : public Command {
+private:
+    TextEditor* editor;
+    std::string backup;
+
+public:
+    PasteCommand(TextEditor* editor) : editor(editor) {}
+
+    // TODO: Implement execute() method that:
+    // 1. Saves backup of current text
+    // 2. Pastes text from clipboard to editor
+    // 3. Returns true
+
+    // TODO: Implement undo() method that restores text from backup
+};
+
+class CommandHistory {
+private:
+    std::vector<std::unique_ptr<Command>> history;
+
+public:
+    void push(Command* cmd) {
+        history.emplace_back(cmd);
+    }
+
+    Command* pop() {
+        if (history.empty()) return nullptr;
+        auto cmd = history.back().release();
+        history.pop_back();
+        return cmd;
+    }
+
+    bool isEmpty() const {
+        return history.empty();
+    }
+};
 
 int main() {
-    Application app;
-    
-    // TODO: Add test code here to demonstrate the commands
-    cout << "Initial text: " << app.getActiveEditor()->getText() << "\n";
-    
+    TextEditor editor;
+    CommandHistory history;
+
+    std::cout << "Enter text: ";
+    std::string input;
+    std::getline(std::cin, input);
+    editor.addText(input);
+
+    // Assume user wants to copy and then paste
+    Command* copy = new CopyCommand(&editor);
+    Command* paste = new PasteCommand(&editor);
+
+    copy->execute(); // Copy current text
+    paste->execute(); // Paste text
+    history.push(copy);
+    history.push(paste);
+
+    std::cout << "Current text: " << editor.getText() << std::endl;
+
+    // Undo last command
+    if (!history.isEmpty()) {
+        Command* cmd = history.pop();
+        cmd->undo();
+        delete cmd;
+        std::cout << "Text after undo: " << editor.getText() << std::endl;
+    }
+
+    // Cleanup remaining commands
+    while (!history.isEmpty()) {
+        delete history.pop();
+    }
+
     return 0;
 }
